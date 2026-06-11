@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "acc9d477-c039-46b5-b6b5-6804738d65b2",
+		"name": "GitHub Profile Analyzer API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48314046",
+		"_collection_link": "https://terencejones2903-8492157.postman.co/workspace/Terence-Jones's-Workspace~816a13c4-5d9b-4079-8a59-37a86f1120ae/collection/48314046-acc9d477-c039-46b5-b6b5-6804738d65b2?action=share&source=collection_link&creator=48314046"
+	},
+	"item": [
+		{
+			"name": "http://localhost:5000/api/analyze/torvalds",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTBhZTg3ODc1MGU4MmI2MmMyNTcwMmUiLCJlbWFpbCI6InRlcmVuY2Vqb25lczI5MDNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJuYW1lIjoidGVyZW5jZSIsImlhdCI6MTc2Mjc1ODMxMSwiZXhwIjoxNzYyNzYxOTExLCJpc3MiOiJteS1hcHAifQ.S0piFrZjCWt8ewGYA7OQPOZgNSdIKZTSr_3f0RWWHGQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"Profile analyzed successfully\",\r\n    \"data\": {\r\n               \"username\": \"torvalds\",\r\n        \"name\": \"Linus Torvalds\",\r\n        \"bio\": \"Linux kernel developer\",\r\n        \"public_repos\": 12,\r\n        \"followers\": 306483,\r\n        \"following\": 0,\r\n        \"total_stars\": 248426,\r\n        \"account_created\": \"2011-09-03\",\r\n        \"profile_url\": \"https://github.com/torvalds\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/analyze/torvalds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"analyze",
+						"torvalds"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/api/analyze/octocat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OTBhZTg3ODc1MGU4MmI2MmMyNTcwMmUiLCJlbWFpbCI6InRlcmVuY2Vqb25lczI5MDNAZ21haWwuY29tIiwicm9sZSI6InVzZXIiLCJuYW1lIjoidGVyZW5jZSIsImlhdCI6MTc2Mjc1ODMxMSwiZXhwIjoxNzYyNzYxOTExLCJpc3MiOiJteS1hcHAifQ.S0piFrZjCWt8ewGYA7OQPOZgNSdIKZTSr_3f0RWWHGQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\": \"Profile analyzed successfully\",\r\n    \"data\": {\r\n        \"username\": \"octocat\",\r\n        \"name\": \"The Octocat\",\r\n        \"bio\": null,\r\n        \"public_repos\": 8,\r\n        \"followers\": 22913,\r\n        \"following\": 9,\r\n        \"total_stars\": 21534,\r\n        \"account_created\": \"2011-01-25\",\r\n        \"profile_url\": \"https://github.com/octocat\"\r\n    }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/analyze/octocat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"analyze",
+						"octocat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/api/profiles",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/profiles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profiles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/api/profiles/octocat",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/profiles/octocat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profiles",
+						"octocat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:5000/api/profiles/torvalds",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/profiles/torvalds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"profiles",
+						"torvalds"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
