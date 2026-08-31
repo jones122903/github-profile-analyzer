@@ -4,6 +4,20 @@ A RESTful backend API built with **Node.js, Express.js, and MySQL** that integra
 
 The application accepts a GitHub username, retrieves profile and repository information from GitHub, calculates repository star statistics, and stores the analyzed profile in a MySQL database for later retrieval.
 
+## Live API
+
+The backend API is deployed on **Render** and connected to a cloud-hosted **Aiven MySQL** database.
+
+**Base URL:**
+
+https://github-profile-analyzer-q3n3.onrender.com
+
+**Example endpoint:**
+
+https://github-profile-analyzer-q3n3.onrender.com/api/profiles
+
+> Note: The deployed service may take additional time to respond to the first request after a period of inactivity.
+
 ## Features
 
 - Fetch public GitHub profile information by username
@@ -14,12 +28,15 @@ The application accepts a GitHub username, retrieves profile and repository info
 - Retrieve all previously analyzed profiles
 - Retrieve a specific stored profile by username
 - Environment-based database configuration
+- Cloud-hosted MySQL database for deployment
 - Postman collection for API testing
 
 ## Tech Stack
 
 - **Backend:** Node.js, Express.js
 - **Database:** MySQL
+- **Cloud Database:** Aiven MySQL
+- **Deployment:** Render
 - **External API:** GitHub REST API
 - **HTTP Client:** Axios
 - **Database Driver:** mysql2
@@ -28,6 +45,20 @@ The application accepts a GitHub username, retrieves profile and repository info
 - **API Testing:** Postman
 
 ## Architecture
+
+```text
+                    GitHub REST API
+                           |
+                           v
+Client / Postman --> Render Backend
+                     Node.js
+                     Express.js
+                           |
+                           v
+                    Aiven MySQL
+```
+
+The backend follows a route-controller-service structure:
 
 ```text
 Client / Postman
@@ -121,7 +152,7 @@ Example:
 POST /api/analyze/octocat
 ```
 
-The API retrieves the user's public GitHub profile and repository information, calculates repository star statistics, and stores the result in MySQL.
+The API retrieves the user's public GitHub profile and repository information, calculates repository star statistics, and stores or updates the result in MySQL.
 
 ### Get All Analyzed Profiles
 
@@ -129,7 +160,7 @@ The API retrieves the user's public GitHub profile and repository information, c
 GET /api/profiles
 ```
 
-Returns all profiles currently stored in the database.
+Returns all profiles currently stored in the database, ordered by the latest analysis.
 
 ### Get Profile by Username
 
@@ -183,12 +214,15 @@ Create a `.env` file in the project root:
 PORT=5000
 
 DB_HOST=localhost
+DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=your_mysql_password
 DB_NAME=github_analyzer
 ```
 
 The `.env` file is ignored by Git and should not be committed to the repository.
+
+For cloud deployment, database credentials should be configured securely through the hosting platform's environment variables.
 
 ### 4. Create the Database
 
@@ -198,7 +232,7 @@ Create a MySQL database:
 CREATE DATABASE github_analyzer;
 ```
 
-Import the provided `database.sql` file to create the required table.
+Import the provided `database.sql` file to create the required `profiles` table.
 
 ### 5. Start the Development Server
 
@@ -214,7 +248,7 @@ http://localhost:5000
 
 ## API Testing
 
-A Postman collection is included:
+A Postman collection is included in the repository:
 
 ```text
 github-analyzer.postman_collection.json
@@ -222,11 +256,58 @@ github-analyzer.postman_collection.json
 
 Import the collection into Postman to test the available API endpoints.
 
+You can also test the deployed API using cURL.
+
+Example:
+
+```bash
+curl https://github-profile-analyzer-q3n3.onrender.com/api/profiles
+```
+
+Analyze a GitHub profile:
+
+```bash
+curl -X POST https://github-profile-analyzer-q3n3.onrender.com/api/analyze/octocat
+```
+
 ## Database
 
-The application uses MySQL to persist analyzed GitHub profiles.
+The application uses **MySQL** for persistent storage.
 
-The `username` field is unique. When an existing username is analyzed again, the stored profile statistics are updated and the analysis timestamp is refreshed.
+For local development, the application can connect to a locally installed MySQL server.
+
+For the deployed application, the Render backend connects securely to an **Aiven-hosted MySQL database using SSL**.
+
+The `username` field is unique. When an existing GitHub username is analyzed again, its stored profile statistics are updated and the `analyzed_at` timestamp is refreshed.
+
+## Deployment
+
+The application uses separate environments for local development and cloud deployment.
+
+```text
+Local Development
+
+Node.js / Express
+       |
+       v
+Local MySQL
+localhost:3306
+```
+
+```text
+Cloud Deployment
+
+GitHub REST API
+       |
+       v
+Render
+Node.js / Express
+       |
+       v
+Aiven MySQL
+```
+
+Database credentials and other sensitive configuration values are stored as environment variables and are not committed to the repository.
 
 ## Future Improvements
 
